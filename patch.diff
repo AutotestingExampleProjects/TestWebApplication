@@ -1,0 +1,498 @@
+diff --git a/.gitattributes b/.gitattributes
+new file mode 100644
+index 0000000..bdb0cab
+--- /dev/null
++++ b/.gitattributes
+@@ -0,0 +1,17 @@
++# Auto detect text files and perform LF normalization
++* text=auto
++
++# Custom for Visual Studio
++*.cs     diff=csharp
++
++# Standard to msysgit
++*.doc	 diff=astextplain
++*.DOC	 diff=astextplain
++*.docx diff=astextplain
++*.DOCX diff=astextplain
++*.dot  diff=astextplain
++*.DOT  diff=astextplain
++*.pdf  diff=astextplain
++*.PDF	 diff=astextplain
++*.rtf	 diff=astextplain
++*.RTF	 diff=astextplain
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..96374c4
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,43 @@
++# Windows image file caches
++Thumbs.db
++ehthumbs.db
++
++# Folder config file
++Desktop.ini
++
++# Recycle Bin used on file shares
++$RECYCLE.BIN/
++
++# Windows Installer files
++*.cab
++*.msi
++*.msm
++*.msp
++
++# Windows shortcuts
++*.lnk
++
++# =========================
++# Operating System Files
++# =========================
++
++# OSX
++# =========================
++
++.DS_Store
++.AppleDouble
++.LSOverride
++
++# Thumbnails
++._*
++
++# Files that might appear on external disk
++.Spotlight-V100
++.Trashes
++
++# Directories potentially created on remote AFP share
++.AppleDB
++.AppleDesktop
++Network Trash Folder
++Temporary Items
++.apdisk
+diff --git a/TestApplication/.gitignore b/TestApplication/.gitignore
+new file mode 100644
+index 0000000..e69de29
+diff --git a/TestApplication/TestApplication.sln b/TestApplication/TestApplication.sln
+new file mode 100644
+index 0000000..13eaa81
+--- /dev/null
++++ b/TestApplication/TestApplication.sln
+@@ -0,0 +1,20 @@
++﻿
++Microsoft Visual Studio Solution File, Format Version 12.00
++# Visual Studio 2012
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApplication", "TestApplication\TestApplication.csproj", "{7EDAF378-BEDC-4829-A025-F61A5AAA7A4F}"
++EndProject
++Global
++	GlobalSection(SolutionConfigurationPlatforms) = preSolution
++		Debug|Any CPU = Debug|Any CPU
++		Release|Any CPU = Release|Any CPU
++	EndGlobalSection
++	GlobalSection(ProjectConfigurationPlatforms) = postSolution
++		{7EDAF378-BEDC-4829-A025-F61A5AAA7A4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{7EDAF378-BEDC-4829-A025-F61A5AAA7A4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{7EDAF378-BEDC-4829-A025-F61A5AAA7A4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{7EDAF378-BEDC-4829-A025-F61A5AAA7A4F}.Release|Any CPU.Build.0 = Release|Any CPU
++	EndGlobalSection
++	GlobalSection(SolutionProperties) = preSolution
++		HideSolutionNode = FALSE
++	EndGlobalSection
++EndGlobal
+diff --git a/TestApplication/TestApplication/MainForm.aspx b/TestApplication/TestApplication/MainForm.aspx
+new file mode 100644
+index 0000000..a50eb64
+--- /dev/null
++++ b/TestApplication/TestApplication/MainForm.aspx
+@@ -0,0 +1,39 @@
++﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MainForm.aspx.cs" Inherits="TestApplication.MainForm" %>
++
++<!DOCTYPE html>
++
++<html xmlns="http://www.w3.org/1999/xhtml">
++<head runat="server">
++    <title></title>
++</head>
++<body>
++    <form id="form1" runat="server">
++    <div>        
++        <div style="text-align: center; font-size: x-large; font-weight: bold; color: #000080;">
++            Customers
++        </div>
++        <br />
++        <br />
++        <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" DataSourceID="SqlDataSource1" align="center" DataKeyNames="customer_id">
++            <Columns>
++                <asp:BoundField DataField="customer_id" HeaderText="##" InsertVisible="False" ReadOnly="True" SortExpression="customer_id" />
++                <asp:BoundField DataField="customer_name" HeaderText="Name" SortExpression="customer_name" />
++                <asp:BoundField DataField="customer_address" HeaderText="Address" SortExpression="customer_address" />
++                <asp:BoundField DataField="customer_phone_1" HeaderText="Contact Phone #1" SortExpression="customer_phone_1" />
++                <asp:BoundField DataField="customer_phone_2" HeaderText="Contact Phone #2" SortExpression="customer_phone_2" />                
++            </Columns>
++            <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
++            <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
++            <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Left" />
++            <RowStyle BackColor="White" ForeColor="#003399" />
++            <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
++            <SortedAscendingCellStyle BackColor="#EDF6F6" />
++            <SortedAscendingHeaderStyle BackColor="#0D4AC4" />
++            <SortedDescendingCellStyle BackColor="#D6DFDF" />
++            <SortedDescendingHeaderStyle BackColor="#002876" />
++        </asp:GridView>
++    </div>
++        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:TestApplicationBD_Connetction %>" SelectCommand="SELECT [customer_name], [customer_address], [customer_phone_1], [customer_phone_2], [customer_id] FROM [tCustomers]"></asp:SqlDataSource>
++    </form>
++</body>
++</html>
+diff --git a/TestApplication/TestApplication/MainForm.aspx.cs b/TestApplication/TestApplication/MainForm.aspx.cs
+new file mode 100644
+index 0000000..02f97af
+--- /dev/null
++++ b/TestApplication/TestApplication/MainForm.aspx.cs
+@@ -0,0 +1,17 @@
++﻿using System;
++using System.Collections.Generic;
++using System.Linq;
++using System.Web;
++using System.Web.UI;
++using System.Web.UI.WebControls;
++
++namespace TestApplication
++{
++    public partial class MainForm : System.Web.UI.Page
++    {
++        protected void Page_Load(object sender, EventArgs e)
++        {
++
++        }
++    }
++}
+\ No newline at end of file
+diff --git a/TestApplication/TestApplication/MainForm.aspx.designer.cs b/TestApplication/TestApplication/MainForm.aspx.designer.cs
+new file mode 100644
+index 0000000..2da93d3
+--- /dev/null
++++ b/TestApplication/TestApplication/MainForm.aspx.designer.cs
+@@ -0,0 +1,42 @@
++﻿//------------------------------------------------------------------------------
++// <auto-generated>
++//     This code was generated by a tool.
++//
++//     Changes to this file may cause incorrect behavior and will be lost if
++//     the code is regenerated. 
++// </auto-generated>
++//------------------------------------------------------------------------------
++
++namespace TestApplication {
++    
++    
++    public partial class MainForm {
++        
++        /// <summary>
++        /// form1 control.
++        /// </summary>
++        /// <remarks>
++        /// Auto-generated field.
++        /// To modify move field declaration from designer file to code-behind file.
++        /// </remarks>
++        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
++        
++        /// <summary>
++        /// GridView1 control.
++        /// </summary>
++        /// <remarks>
++        /// Auto-generated field.
++        /// To modify move field declaration from designer file to code-behind file.
++        /// </remarks>
++        protected global::System.Web.UI.WebControls.GridView GridView1;
++        
++        /// <summary>
++        /// SqlDataSource1 control.
++        /// </summary>
++        /// <remarks>
++        /// Auto-generated field.
++        /// To modify move field declaration from designer file to code-behind file.
++        /// </remarks>
++        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
++    }
++}
+diff --git a/TestApplication/TestApplication/Properties/AssemblyInfo.cs b/TestApplication/TestApplication/Properties/AssemblyInfo.cs
+new file mode 100644
+index 0000000..24a68ae
+--- /dev/null
++++ b/TestApplication/TestApplication/Properties/AssemblyInfo.cs
+@@ -0,0 +1,35 @@
++﻿using System.Reflection;
++using System.Runtime.CompilerServices;
++using System.Runtime.InteropServices;
++
++// General Information about an assembly is controlled through the following 
++// set of attributes. Change these attribute values to modify the information
++// associated with an assembly.
++[assembly: AssemblyTitle("TestApplication")]
++[assembly: AssemblyDescription("")]
++[assembly: AssemblyConfiguration("")]
++[assembly: AssemblyCompany("")]
++[assembly: AssemblyProduct("TestApplication")]
++[assembly: AssemblyCopyright("Copyright ©  2015")]
++[assembly: AssemblyTrademark("")]
++[assembly: AssemblyCulture("")]
++
++// Setting ComVisible to false makes the types in this assembly not visible 
++// to COM components.  If you need to access a type in this assembly from 
++// COM, set the ComVisible attribute to true on that type.
++[assembly: ComVisible(false)]
++
++// The following GUID is for the ID of the typelib if this project is exposed to COM
++[assembly: Guid("0514c23a-cc9a-4a43-8946-ed93c4703024")]
++
++// Version information for an assembly consists of the following four values:
++//
++//      Major Version
++//      Minor Version 
++//      Build Number
++//      Revision
++//
++// You can specify all the values or you can default the Revision and Build Numbers 
++// by using the '*' as shown below:
++[assembly: AssemblyVersion("1.0.0.0")]
++[assembly: AssemblyFileVersion("1.0.0.0")]
+diff --git a/TestApplication/TestApplication/TestApplication.csproj b/TestApplication/TestApplication/TestApplication.csproj
+new file mode 100644
+index 0000000..91f3848
+--- /dev/null
++++ b/TestApplication/TestApplication/TestApplication.csproj
+@@ -0,0 +1,113 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
++  <PropertyGroup>
++    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
++    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
++    <ProductVersion>
++    </ProductVersion>
++    <SchemaVersion>2.0</SchemaVersion>
++    <ProjectGuid>{7EDAF378-BEDC-4829-A025-F61A5AAA7A4F}</ProjectGuid>
++    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
++    <OutputType>Library</OutputType>
++    <AppDesignerFolder>Properties</AppDesignerFolder>
++    <RootNamespace>TestApplication</RootNamespace>
++    <AssemblyName>TestApplication</AssemblyName>
++    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
++    <UseIISExpress>true</UseIISExpress>
++    <IISExpressSSLPort />
++    <IISExpressAnonymousAuthentication />
++    <IISExpressWindowsAuthentication />
++    <IISExpressUseClassicPipelineMode />
++  </PropertyGroup>
++  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
++    <DebugSymbols>true</DebugSymbols>
++    <DebugType>full</DebugType>
++    <Optimize>false</Optimize>
++    <OutputPath>bin\</OutputPath>
++    <DefineConstants>DEBUG;TRACE</DefineConstants>
++    <ErrorReport>prompt</ErrorReport>
++    <WarningLevel>4</WarningLevel>
++  </PropertyGroup>
++  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
++    <DebugType>pdbonly</DebugType>
++    <Optimize>true</Optimize>
++    <OutputPath>bin\</OutputPath>
++    <DefineConstants>TRACE</DefineConstants>
++    <ErrorReport>prompt</ErrorReport>
++    <WarningLevel>4</WarningLevel>
++  </PropertyGroup>
++  <ItemGroup>
++    <Reference Include="Microsoft.CSharp" />
++    <Reference Include="System.Web.DynamicData" />
++    <Reference Include="System.Web.Entity" />
++    <Reference Include="System.Web.ApplicationServices" />
++    <Reference Include="System.ComponentModel.DataAnnotations" />
++    <Reference Include="System" />
++    <Reference Include="System.Data" />
++    <Reference Include="System.Core" />
++    <Reference Include="System.Data.DataSetExtensions" />
++    <Reference Include="System.Web.Extensions" />
++    <Reference Include="System.Xml.Linq" />
++    <Reference Include="System.Drawing" />
++    <Reference Include="System.Web" />
++    <Reference Include="System.Xml" />
++    <Reference Include="System.Configuration" />
++    <Reference Include="System.Web.Services" />
++    <Reference Include="System.EnterpriseServices" />
++  </ItemGroup>
++  <ItemGroup>
++    <Content Include="MainForm.aspx" />
++    <Content Include="Web.config" />
++  </ItemGroup>
++  <ItemGroup>
++    <Compile Include="MainForm.aspx.cs">
++      <DependentUpon>MainForm.aspx</DependentUpon>
++      <SubType>ASPXCodeBehind</SubType>
++    </Compile>
++    <Compile Include="MainForm.aspx.designer.cs">
++      <DependentUpon>MainForm.aspx</DependentUpon>
++    </Compile>
++    <Compile Include="Properties\AssemblyInfo.cs" />
++  </ItemGroup>
++  <ItemGroup>
++    <None Include="Web.Debug.config">
++      <DependentUpon>Web.config</DependentUpon>
++    </None>
++    <None Include="Web.Release.config">
++      <DependentUpon>Web.config</DependentUpon>
++    </None>
++  </ItemGroup>
++  <PropertyGroup>
++    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
++    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
++  </PropertyGroup>
++  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
++  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
++  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
++  <ProjectExtensions>
++    <VisualStudio>
++      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
++        <WebProjectProperties>
++          <UseIIS>True</UseIIS>
++          <AutoAssignPort>True</AutoAssignPort>
++          <DevelopmentServerPort>0</DevelopmentServerPort>
++          <DevelopmentServerVPath>/</DevelopmentServerVPath>
++          <IISUrl>http://localhost:51881/</IISUrl>
++          <NTLMAuthentication>False</NTLMAuthentication>
++          <UseCustomServer>False</UseCustomServer>
++          <CustomServerUrl>
++          </CustomServerUrl>
++          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
++        </WebProjectProperties>
++      </FlavorProperties>
++    </VisualStudio>
++  </ProjectExtensions>
++  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
++       Other similar extension points exist, see Microsoft.Common.targets.
++  <Target Name="BeforeBuild">
++  </Target>
++  <Target Name="AfterBuild">
++  </Target>
++  -->
++</Project>
+\ No newline at end of file
+diff --git a/TestApplication/TestApplication/Web.Debug.config b/TestApplication/TestApplication/Web.Debug.config
+new file mode 100644
+index 0000000..2e302f9
+--- /dev/null
++++ b/TestApplication/TestApplication/Web.Debug.config
+@@ -0,0 +1,30 @@
++<?xml version="1.0" encoding="utf-8"?>
++
++<!-- For more information on using web.config transformation visit http://go.microsoft.com/fwlink/?LinkId=125889 -->
++
++<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
++  <!--
++    In the example below, the "SetAttributes" transform will change the value of 
++    "connectionString" to use "ReleaseSQLServer" only when the "Match" locator 
++    finds an attribute "name" that has a value of "MyDB".
++    
++    <connectionStrings>
++      <add name="MyDB" 
++        connectionString="Data Source=ReleaseSQLServer;Initial Catalog=MyReleaseDB;Integrated Security=True" 
++        xdt:Transform="SetAttributes" xdt:Locator="Match(name)"/>
++    </connectionStrings>
++  -->
++  <system.web>
++    <!--
++      In the example below, the "Replace" transform will replace the entire 
++      <customErrors> section of your web.config file.
++      Note that because there is only one customErrors section under the 
++      <system.web> node, there is no need to use the "xdt:Locator" attribute.
++      
++      <customErrors defaultRedirect="GenericError.htm"
++        mode="RemoteOnly" xdt:Transform="Replace">
++        <error statusCode="500" redirect="InternalError.htm"/>
++      </customErrors>
++    -->
++  </system.web>
++</configuration>
+\ No newline at end of file
+diff --git a/TestApplication/TestApplication/Web.Release.config b/TestApplication/TestApplication/Web.Release.config
+new file mode 100644
+index 0000000..c358444
+--- /dev/null
++++ b/TestApplication/TestApplication/Web.Release.config
+@@ -0,0 +1,31 @@
++<?xml version="1.0" encoding="utf-8"?>
++
++<!-- For more information on using web.config transformation visit http://go.microsoft.com/fwlink/?LinkId=125889 -->
++
++<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
++  <!--
++    In the example below, the "SetAttributes" transform will change the value of 
++    "connectionString" to use "ReleaseSQLServer" only when the "Match" locator 
++    finds an attribute "name" that has a value of "MyDB".
++    
++    <connectionStrings>
++      <add name="MyDB" 
++        connectionString="Data Source=ReleaseSQLServer;Initial Catalog=MyReleaseDB;Integrated Security=True" 
++        xdt:Transform="SetAttributes" xdt:Locator="Match(name)"/>
++    </connectionStrings>
++  -->
++  <system.web>
++    <compilation xdt:Transform="RemoveAttributes(debug)" />
++    <!--
++      In the example below, the "Replace" transform will replace the entire 
++      <customErrors> section of your web.config file.
++      Note that because there is only one customErrors section under the 
++      <system.web> node, there is no need to use the "xdt:Locator" attribute.
++      
++      <customErrors defaultRedirect="GenericError.htm"
++        mode="RemoteOnly" xdt:Transform="Replace">
++        <error statusCode="500" redirect="InternalError.htm"/>
++      </customErrors>
++    -->
++  </system.web>
++</configuration>
+\ No newline at end of file
+diff --git a/TestApplication/TestApplication/Web.config b/TestApplication/TestApplication/Web.config
+new file mode 100644
+index 0000000..f7bda92
+--- /dev/null
++++ b/TestApplication/TestApplication/Web.config
+@@ -0,0 +1,18 @@
++<?xml version="1.0"?>
++
++<!--
++  For more information on how to configure your ASP.NET application, please visit
++  http://go.microsoft.com/fwlink/?LinkId=169433
++  -->
++
++<configuration>
++    <connectionStrings>
++        <add name="TestApplicationBD_Connetction" connectionString="Data Source=JACOM-PC;Initial Catalog=TestApplication;Persist Security Info=True;User ID=sa;Password=serversql"
++            providerName="System.Data.SqlClient" />
++    </connectionStrings>
++    <system.web>
++      <compilation debug="true" targetFramework="4.5" />
++      <httpRuntime targetFramework="4.5" />
++    </system.web>
++
++</configuration>
+diff --git a/TestApplication/TestApplication/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs b/TestApplication/TestApplication/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+new file mode 100644
+index 0000000..e69de29
+diff --git a/TestApplication/TestApplication/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs b/TestApplication/TestApplication/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+new file mode 100644
+index 0000000..e69de29
+diff --git a/TestApplication/TestApplication/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs b/TestApplication/TestApplication/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
+new file mode 100644
+index 0000000..e69de29
+diff --git a/TestApplication/TestApplication/obj/Debug/TestApplication.csproj.FileListAbsolute.txt b/TestApplication/TestApplication/obj/Debug/TestApplication.csproj.FileListAbsolute.txt
+new file mode 100644
+index 0000000..26548de
+--- /dev/null
++++ b/TestApplication/TestApplication/obj/Debug/TestApplication.csproj.FileListAbsolute.txt
+@@ -0,0 +1,5 @@
++D:\Work\Web\0001 (ASP.NET)\TestApplication\TestApplication\bin\TestApplication.dll
++D:\Work\Web\0001 (ASP.NET)\TestApplication\TestApplication\bin\TestApplication.pdb
++D:\Work\Web\0001 (ASP.NET)\TestApplication\TestApplication\obj\Debug\TestApplication.csprojResolveAssemblyReference.cache
++D:\Work\Web\0001 (ASP.NET)\TestApplication\TestApplication\obj\Debug\TestApplication.dll
++D:\Work\Web\0001 (ASP.NET)\TestApplication\TestApplication\obj\Debug\TestApplication.pdb
